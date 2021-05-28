@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  python:
+    build: ./python
+    container_name: sandbox-python
+    volumes:
+      - ./python:/sandbox
+  mysql:
+    build: ./mysql
+    container_name: sandbox-mysql
+    volumes:
+      - ./mysql/db/data:/var/lib/mysql
+      - ./mysql/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/db/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_user_pw
+      TZ: 'Asia/Tokyo'
+
